@@ -405,7 +405,9 @@ export default class HttpServer {
       // Payload processing
       const encoding = detectEncoding(request)
 
-      request.payload = request.payload && request.payload.toString(encoding)
+      if (request.payload && encoding !== 'binary') {
+        request.payload = request.payload.toString(encoding)
+      }
       request.rawPayload = request.payload
 
       // Incomming request message
